@@ -1,4 +1,4 @@
-const productsApi = [
+const arrayProducts = [
   {
     id: 1,
     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -268,15 +268,15 @@ const productsApi = [
 ];
 
 // let totalPrecios1 = 0
-// for(let i = 0; i < productsApi.length; i++){
-//     totalPrecios1 = totalPrecios1 + productsApi[i].price
+// for(let i = 0; i < arrayProducts.length; i++){
+//     totalPrecios1 = totalPrecios1 + arrayProducts[i].price
 // }
 
 // console.log(totalPrecios1.toFixed(2))
 
 // let totalPrecios = 0
 
-// productsApi.forEach( item=>{
+// arrayProducts.forEach( item=>{
 //   // totalPrecios = totalPrecios + item.price
 //   totalPrecios += item.price
 // })
@@ -304,7 +304,7 @@ const productsApi = [
 
 const container = document.getElementById("container");
 
-function drawCard(array){
+function drawCards(array){
     container.innerHTML = ""
     array.forEach( objProduct => {
         container.innerHTML +=`
@@ -335,22 +335,62 @@ function drawCard(array){
     });
 }
 
-drawCard(productsApi)
-
 //* Mostrar en pantalla cada objeto en un Card de tailwind
+drawCards(arrayProducts)
 
-
-//* Filtrar por Men's clothing
-
+//* Filtrar por categoria
 const filterArray = (array, category) => {
    return array.filter(item => item.category === category)
 }
 
+//* Buscar un producto
+const searchProductsArray = (array, title) => {
+  //convertir el titulo de cada objeto y el titulo del parametro  a minuscula
+  //includes: Nos sirver para validar si un string esta incluido dentro de otro strings
+   return array.filter(item => item.title.toLowerCase().includes(title.toLowerCase()))
+}
 
+
+//* Detectar el evento click del botón Men's clothing
 const btnFilter1 = document.getElementById("btnFilter1")
+const btnFilter2 = document.getElementById("btnFilter2")
+const btnFilter3 = document.getElementById("btnFilter3")
+const btnFilter4 = document.getElementById("btnFilter4")
+const productSearch = document.getElementById("productSearch")
 
 btnFilter1.addEventListener('click', ()=>{
-    var arrayFiltered = filterArray(productsApi, "men's clothing")
-    drawCard(arrayFiltered)
+    var arrayFiltered = filterArray(arrayProducts, "men's clothing")
+    drawCards(arrayFiltered)
 })
 
+btnFilter2.addEventListener('click', ()=>{
+  var arrayFiltered = filterArray(arrayProducts, "women's clothing")
+  drawCards(arrayFiltered)
+})
+
+btnFilter3.addEventListener("click", ()=>{
+  var arrayFiltered = filterArray(arrayProducts, "electronics")
+  drawCards(arrayFiltered)
+})
+
+btnFilter4.addEventListener("click", ()=>{
+  var arrayFiltered = filterArray(arrayProducts, "jewelery")
+  drawCards(arrayFiltered)
+})
+
+productSearch.addEventListener('input', ()=>{
+  var arraySearched = searchProductsArray(arrayProducts,productSearch.value)
+  drawCards(arraySearched)
+})
+
+//*Reto de la semana
+/* 
+Realizar un Login, que tenga un input para el correo, un input para la contraseña, y un botón para iniciar sesión.
+
+Eventos:
+1:Detectar el evento click al botón iniciar sesión
+2:Detectar el texto al input correo
+3:Detectar el texto al input contraseña
+4:Mostrar en consola el correo y la contraseña que ingresó el usuario
+
+*/
